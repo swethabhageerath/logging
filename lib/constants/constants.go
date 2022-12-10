@@ -17,3 +17,18 @@ func (f FrameDepth) String() string {
 		return "Current"
 	}
 }
+
+type LoggerType int
+
+const (
+	DEFAULT LoggerType = iota
+)
+
+func (l LoggerType) String() string {
+	switch l {
+	case DEFAULT:
+		return "Default"
+	default:
+		return "Default"
+	}
+}

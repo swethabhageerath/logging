@@ -2,15 +2,15 @@ package models
 
 type Log struct {
 	AppName   string
-	Username  string
+	User      string
 	RequestId string
-	Frames    []frame
+	Frames    []Frame
 	Message   string
 	Params    string
 	Details   string
 }
 
-type frame struct {
+type Frame struct {
 	FilePath   string
 	Operation  string
 	LineNumber int
