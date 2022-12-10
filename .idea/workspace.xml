@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31976393-87d4-4d71-9bbe-83a710e65b8c" name="Changes" comment="" />
+    <list default="true" id="31976393-87d4-4d71-9bbe-83a710e65b8c" name="Changes" comment="Initial">
+      <change afterPath="$PROJECT_DIR$/internal/logger/defaultlogger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/logging/ilogging.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/writers/dbwriter.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/writers/filewriter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/constants/constants.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constants/constants.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/logger/defaultlogger.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/logging/logging.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/logging/logging.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/models/log.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,7 +30,25 @@
   </component>
   <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Program Files/Go" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="c49daa3c-e72f-4fa4-ba0a-74d12fe761f0" />
+        <option name="url" value="https://github.com/swethabhageerath/logging.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -31,17 +60,28 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "DefaultGoTemplateProperty": "Go File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Users/bmool"
+    "last_opened_file_path": "C:/Projects/Golang/Workspace/src/libraries/utilities",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Projects\Golang\Workspace\src\libraries\logging\internal" />
+      <recent name="C:\Projects\Golang\Workspace\src\libraries\logging\internal\logging" />
+      <recent name="C:\Projects\Golang\Workspace\src\libraries\logging\internal\logger" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
@@ -51,11 +91,27 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="adding_logging" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
