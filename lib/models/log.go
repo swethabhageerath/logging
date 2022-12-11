@@ -1,10 +1,11 @@
 package models
 
 type Log struct {
+	Frames    []Frame
 	AppName   string
 	User      string
 	RequestId string
-	Frames    []Frame
+	LogLevel  string
 	Message   string
 	Params    string
 	Details   string
