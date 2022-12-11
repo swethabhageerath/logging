@@ -5,16 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31976393-87d4-4d71-9bbe-83a710e65b8c" name="Changes" comment="Initial">
-      <change afterPath="$PROJECT_DIR$/internal/logger/defaultlogger.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/logging/ilogging.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/writers/dbwriter.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/writers/filewriter.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/logger/logging.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/logger/defaultlogger.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/logger/defaultlogger.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/logging/logging.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/models/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/log.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/constants/constants.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constants/constants.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/logger/defaultlogger.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/logging/logging.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/logging/logging.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/models/log.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/logger/ilogger.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/logger/ilogger.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/logging/ilogging.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/logger/ilogging.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/writers/filewriter.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/writers/filewriter.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +29,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Program Files/Go" />
+  <component name="GOROOT" url="file:///usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -50,6 +51,9 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../../../pkg/mod/github.com/swethabhageerath/utilities@v1.0.8/lib/utilities/helpers/filehelper.go" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -58,28 +62,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Projects/Golang/Workspace/src/libraries/utilities",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;configurable..is.expanded&quot;: &quot;false&quot;,
+    &quot;configurable.GoLibrariesConfigurable.is.expanded&quot;: &quot;true&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/bhagi/projects/golang/workspace/src/libraries/logging&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;go.sdk&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib" />
+      <recent name="$PROJECT_DIR$/lib/logger" />
+      <recent name="$PROJECT_DIR$/lib/logging" />
       <recent name="C:\Projects\Golang\Workspace\src\libraries\logging\internal" />
       <recent name="C:\Projects\Golang\Workspace\src\libraries\logging\internal\logging" />
-      <recent name="C:\Projects\Golang\Workspace\src\libraries\logging\internal\logger" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

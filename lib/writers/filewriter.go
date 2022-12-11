@@ -1,16 +1,17 @@
 package writers
 
 import (
-	"github.com/swethabhageerath/utilities/lib/utilities/environmenthelper"
-	"github.com/swethabhageerath/utilities/lib/utilities/filehelpers"
+	"fmt"
+	h "github.com/swethabhageerath/utilities/lib/utilities/helpers"
+	"os"
 )
 
 type FileWriter struct {
-	env  environmenthelper.IEnvironmentHelper
-	file filehelpers.IFileHelper
+	env  h.IEnvironmentHelper
+	file h.IFileHelper
 }
 
-func New(env environmenthelper.IEnvironmentHelper, file filehelpers.IFileHelper) FileWriter {
+func New(env h.IEnvironmentHelper, file h.IFileHelper) FileWriter {
 	return FileWriter{
 		env:  env,
 		file: file,
@@ -18,15 +19,19 @@ func New(env environmenthelper.IEnvironmentHelper, file filehelpers.IFileHelper)
 }
 
 func (f FileWriter) Write(b []byte) (int, error) {
-	logFileDirectory := f.env.Get("KEY_LOGDIRECTORYPATH")
-	if logFileDirectory == "" {
-		panic("Log File Directory path is not specified in the environment variables")
+	logFileDirectory, err := os.UserHomeDir()
+	if err != nil {
+		panic(err)
 	}
+	if logFileDirectory == "" {
+		panic("Log File Directory path cannot be retrieved")
+	}
+	logFileDirectory = fmt.Sprintf("%s/logs", logFileDirectory)
 	filePath, err := f.file.CreateFileWithCurrentDate(logFileDirectory)
 	if err != nil {
 		panic(err)
 	}
-	err = f.file.WriteFile(filePath, string(b))
+	err = f.file.WriteFile(filePath, string(b)+"\n")
 	if err != nil {
 		panic(err)
 	}

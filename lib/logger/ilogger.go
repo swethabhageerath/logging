@@ -2,13 +2,16 @@ package logger
 
 import (
 	"context"
-	"libraries/logging/lib/constants"
+	"github.com/swethabhageerath/logging/lib/constants"
 )
 
 type ILogger interface {
-	AddMessage(message string)
-	AddParams(params string)
-	AddDetails(details string)
-	AddFrames(frameDepth constants.FrameDepth)
-	AddContext(context context.Context)
+	AddMessage(message string) ILogger
+	AddParams(params string) ILogger
+	AddDetails(details string) ILogger
+	AddFrames(frameDepth constants.FrameDepth) ILogger
+	AddContext(context context.Context) ILogger
+	AddLogLevel(logLevel constants.LogLevel) ILogger
+	AddAppName(appName string) ILogger
+	Log()
 }
