@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31976393-87d4-4d71-9bbe-83a710e65b8c" name="Changes" comment="Initial">
-      <change afterPath="$PROJECT_DIR$/lib/logger/logging.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/logger/defaultlogger.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/logger/defaultlogger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/logging/logging.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/models/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/log.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/constants/constants.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constants/constants.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/logger/ilogger.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/logger/ilogger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/logging/ilogging.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/logger/ilogging.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/logger/defaultlogger.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/logger/defaultlogger.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/writers/filewriter.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/writers/filewriter.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +99,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="adding_logging" />
+                        <option value="added_logging" />
                       </list>
                     </value>
                   </entry>
