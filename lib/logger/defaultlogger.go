@@ -99,7 +99,7 @@ func (d *DefaultLogger) Log() {
 	}
 	for _, i := range d.writers {
 		s, err := h.MarshallingHelper{}.Marshall(d.log)
-		fmt.Println(s)
+
 		if err != nil {
 			panic(err)
 		}

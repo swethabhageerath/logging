@@ -19,15 +19,16 @@ func New(env h.IEnvironmentHelper, file h.IFileHelper) FileWriter {
 }
 
 func (f FileWriter) Write(b []byte) (int, error) {
-	logFileDirectory, err := os.UserHomeDir()
+	logFileParentDirectory, err := os.UserHomeDir()
+	logFileDirectory := f.env.Get("KEY_LOGDIRECTORYPATH")
+	fullLogDirectoryPath := fmt.Sprintf("%s%s", logFileParentDirectory, logFileDirectory)
 	if err != nil {
 		panic(err)
 	}
 	if logFileDirectory == "" {
 		panic("Log File Directory path cannot be retrieved")
 	}
-	logFileDirectory = fmt.Sprintf("%s/logs", logFileDirectory)
-	filePath, err := f.file.CreateFileWithCurrentDate(logFileDirectory)
+	filePath, err := f.file.CreateFileWithCurrentDate(fullLogDirectoryPath)
 	if err != nil {
 		panic(err)
 	}
