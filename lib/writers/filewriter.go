@@ -2,8 +2,9 @@ package writers
 
 import (
 	"fmt"
-	h "github.com/swethabhageerath/utilities/lib/utilities/helpers"
 	"os"
+
+	h "github.com/swethabhageerath/utilities/lib/utilities/helpers"
 )
 
 type FileWriter struct {
@@ -20,6 +21,7 @@ func New(env h.IEnvironmentHelper, file h.IFileHelper) FileWriter {
 
 func (f FileWriter) Write(b []byte) (int, error) {
 	logFileParentDirectory, err := os.UserHomeDir()
+	os.Setenv("KEY_LOGDIRECTORYPATH", "/logs")
 	logFileDirectory := f.env.Get("KEY_LOGDIRECTORYPATH")
 	fullLogDirectoryPath := fmt.Sprintf("%s%s", logFileParentDirectory, logFileDirectory)
 	if err != nil {
