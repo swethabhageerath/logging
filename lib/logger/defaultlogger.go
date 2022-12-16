@@ -1,11 +1,9 @@
 package logger
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"io"
-	"os"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -97,6 +95,7 @@ func (d *DefaultLogger) Log() {
 	if d.log.LogLevel == "" {
 		d.log.LogLevel = constants.DEBUG.String()
 	}
+
 	for _, i := range d.writers {
 		j, err := json.Marshal(d.log)
 		if err != nil {
@@ -108,29 +107,4 @@ func (d *DefaultLogger) Log() {
 			panic(err)
 		}
 	}
-}
-
-func (d *DefaultLogger) getEnvVariable(k constants.RequestKeys) string {
-	return os.Getenv(k.String())
-}
-
-func (d *DefaultLogger) getContextVariable(ctx context.Context) (requestId string, user string) {
-	requestIdKey := d.getEnvVariable(constants.KEY_REQUESTID)
-	userKey := d.getEnvVariable(constants.KEY_USER)
-
-	if requestIdKey == "" || userKey == "" {
-		panic(constants.ERR_REQUEST_CONTEXT_VALUE_KEYS_NOT_PROVIDED)
-	}
-
-	requestId = ctx.Value(requestIdKey).(string)
-	if requestId == "" {
-		panic(constants.ERR_REQUEST_CONTEXT_VALUES_NOT_PROVIDED)
-	}
-
-	user = ctx.Value(userKey).(string)
-	if user == "" {
-		panic(constants.ERR_REQUEST_CONTEXT_VALUES_NOT_PROVIDED)
-	}
-
-	return
 }
