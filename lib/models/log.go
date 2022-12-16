@@ -1,7 +1,7 @@
 package models
 
 type Log struct {
-	Frames    []Frame
+	Frames    string
 	AppName   string
 	User      string
 	RequestId string
