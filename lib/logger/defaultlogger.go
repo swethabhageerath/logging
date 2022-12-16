@@ -2,30 +2,26 @@ package logger
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
+	"os"
+	"strings"
+
+	"github.com/pkg/errors"
 	"github.com/swethabhageerath/logging/lib/constants"
 	"github.com/swethabhageerath/logging/lib/models"
-	h "github.com/swethabhageerath/utilities/lib/utilities/helpers"
-	"io"
-	"runtime"
-	"strings"
 )
 
 type DefaultLogger struct {
-	log        *models.Log
-	env        h.IEnvironmentHelper
-	ctx        h.IContextHelper
-	writers    []io.Writer
-	marsheller h.IMarshallingHelper
+	log     *models.Log
+	writers []io.Writer
 }
 
-func NewDefaultLogger(writers []io.Writer, env h.IEnvironmentHelper, ctx h.IContextHelper, marsheller h.IMarshallingHelper) *DefaultLogger {
+func NewDefaultLogger(writers []io.Writer) *DefaultLogger {
 	return &DefaultLogger{
-		log:        &models.Log{},
-		env:        env,
-		ctx:        ctx,
-		writers:    writers,
-		marsheller: marsheller,
+		log:     &models.Log{},
+		writers: writers,
 	}
 }
 
@@ -60,36 +56,31 @@ func (d *DefaultLogger) AddLogLevel(logLevel constants.LogLevel) ILogger {
 	return d
 }
 
-func (d *DefaultLogger) AddContext(context context.Context) ILogger {
-	requestIdKey := d.env.Get("KEY_REQUESTID")
-	userKey := d.env.Get("KEY_USER")
-
-	fmt.Println("RequestIdKey", requestIdKey, "UserKey", userKey)
-
-	if requestIdKey == "" || userKey == "" {
-		panic("RequestIdKey or UserKey not present in environment variables")
-	}
-
-	requestId, err := d.ctx.Get(context, requestIdKey)
-	if err != nil {
-		panic(err)
-	}
-	user, err := d.ctx.Get(context, userKey)
-	if err != nil {
-		panic(err)
-	}
-
+func (d *DefaultLogger) AddContext(ctx context.Context) ILogger {
+	requestId, user := d.getContextVariable(ctx)
 	d.log.RequestId = requestId
 	d.log.User = user
 	return d
 }
 
-func (d *DefaultLogger) AddFrames(frameDepth constants.FrameDepth) ILogger {
-	if frameDepth == constants.CURRENT {
-		d.log.Frames = append(d.log.Frames, d.getFrame())
-	} else {
-		d.log.Frames = d.getFrames()
+func (d *DefaultLogger) AddStackTrace(e error) ILogger {
+	type stackTracer interface {
+		StackTrace() errors.StackTrace
 	}
+
+	var stackBuilder strings.Builder
+
+	if err, ok := e.(stackTracer); ok {
+		for _, f := range err.StackTrace() {
+			stack := fmt.Sprintf("%+v ", f)
+
+			if !strings.Contains(stack, "/runtime") {
+				stackBuilder.WriteString(strings.Replace(stack, "\n\t", " ", -1))
+			}
+		}
+	}
+
+	d.log.Frames = stackBuilder.String()
 	return d
 }
 
@@ -98,55 +89,39 @@ func (d *DefaultLogger) Log() {
 		d.log.LogLevel = constants.DEBUG.String()
 	}
 	for _, i := range d.writers {
-		s, err := h.MarshallingHelper{}.Marshall(d.log)
-
+		j, err := json.Marshal(d.log)
 		if err != nil {
 			panic(err)
 		}
-		_, err = i.Write([]byte(s))
+
+		_, err = i.Write([]byte(j))
 		if err != nil {
 			panic(err)
 		}
 	}
 }
 
-func (d *DefaultLogger) getFrames() []models.Frame {
-	ptrs := make([]uintptr, 10)
-	numberOfEntries := runtime.Callers(0, ptrs)
-	if numberOfEntries == 0 {
-		return nil
-	}
-
-	ptrs = ptrs[:numberOfEntries]
-	callerFrames := runtime.CallersFrames(ptrs)
-
-	frames := make([]models.Frame, 0)
-
-	for {
-		frame, more := callerFrames.Next()
-
-		if !strings.Contains(frame.File, "defaultlogger.go") && !strings.Contains(frame.File, "/runtime/") {
-			frames = append(frames, models.Frame{
-				FilePath:   frame.File,
-				LineNumber: frame.Line,
-				Operation:  frame.Func.Name(),
-			})
-		}
-
-		if !more {
-			break
-		}
-	}
-
-	return frames
+func (d *DefaultLogger) getEnvVariable(k constants.RequestKeys) string {
+	return os.Getenv(k.String())
 }
 
-func (d *DefaultLogger) getFrame() models.Frame {
-	ptr, file, line, _ := runtime.Caller(0)
+func (d *DefaultLogger) getContextVariable(ctx context.Context) (requestId string, user string) {
+	requestIdKey := d.getEnvVariable(constants.KEY_REQUESTID)
+	userKey := d.getEnvVariable(constants.KEY_USER)
 
-	return models.Frame{
-		FilePath:   file,
-		Operation:  runtime.FuncForPC(ptr).Name(),
-		LineNumber: line,
+	if requestIdKey == "" || userKey == "" {
+		panic(constants.ERR_REQUEST_CONTEXT_VALUE_KEYS_NOT_PROVIDED)
 	}
+
+	requestId = ctx.Value(requestIdKey).(string)
+	if requestId == "" {
+		panic(constants.ERR_REQUEST_CONTEXT_VALUES_NOT_PROVIDED)
+	}
+
+	user = ctx.Value(userKey).(string)
+	if user == "" {
+		panic(constants.ERR_REQUEST_CONTEXT_VALUES_NOT_PROVIDED)
+	}
+
+	return
 }
