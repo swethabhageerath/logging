@@ -11,5 +11,7 @@ type ILogger interface {
 	AddStackTrace(e error) ILogger
 	AddLogLevel(logLevel constants.LogLevel) ILogger
 	AddAppName(appName string) ILogger
+	AddRequestId(requestId string) ILogger
+	AddUser(user string) ILogger
 	Log()
 }
