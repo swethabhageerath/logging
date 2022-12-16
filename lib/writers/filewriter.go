@@ -3,40 +3,70 @@ package writers
 import (
 	"fmt"
 	"os"
+	"path"
+	"time"
 
-	h "github.com/swethabhageerath/utilities/lib/utilities/helpers"
+	"github.com/swethabhageerath/logging/lib/constants"
 )
 
-type FileWriter struct {
-	env  h.IEnvironmentHelper
-	file h.IFileHelper
-}
+type FileWriter struct{}
 
-func New(env h.IEnvironmentHelper, file h.IFileHelper) FileWriter {
-	return FileWriter{
-		env:  env,
-		file: file,
-	}
-}
+func (f FileWriter) Write(data []byte) (int, error) {
+	logFileParentDirectory := f.getUserHomeDirectory()
 
-func (f FileWriter) Write(b []byte) (int, error) {
-	logFileParentDirectory, err := os.UserHomeDir()
-	os.Setenv("KEY_LOGDIRECTORYPATH", "/logs")
-	logFileDirectory := f.env.Get("KEY_LOGDIRECTORYPATH")
-	fullLogDirectoryPath := fmt.Sprintf("%s%s", logFileParentDirectory, logFileDirectory)
-	if err != nil {
-		panic(err)
-	}
-	if logFileDirectory == "" {
-		panic("Log File Directory path cannot be retrieved")
-	}
-	filePath, err := f.file.CreateFileWithCurrentDate(fullLogDirectoryPath)
-	if err != nil {
-		panic(err)
-	}
-	err = f.file.WriteFile(filePath, string(b)+"\n")
-	if err != nil {
-		panic(err)
-	}
+	logFileDirectory := f.getLogDirectoryPath()
+
+	fullLogDirectoryPath := path.Join(logFileParentDirectory, logFileDirectory)
+
+	filePath := f.createFileWithCurrentDate(fullLogDirectoryPath)
+
+	f.writeFile(filePath, data)
+
 	return 0, nil
+}
+
+func (f FileWriter) writeFile(filePath string, data []byte) {
+	fi, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND, 0644)
+	if err != nil {
+		panic(fi)
+	}
+
+	_, err = fi.Write(data)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (f FileWriter) createFileWithCurrentDate(directoryPath string) string {
+	fileNameWithCurrentDate := fmt.Sprintf("%s.txt", time.Now().Format("2006-01-02"))
+
+	fullFilePath := path.Join(directoryPath, fileNameWithCurrentDate)
+
+	if _, err := os.Stat(fullFilePath); err == nil {
+		return fullFilePath
+	}
+
+	_, err := os.Create(fullFilePath)
+	if err != nil {
+		panic(err)
+	}
+
+	return fullFilePath
+}
+
+func (f FileWriter) getUserHomeDirectory() string {
+	logFileParentDirectory, err := os.UserHomeDir()
+	if err != nil {
+		panic(err)
+	}
+	return logFileParentDirectory
+}
+
+func (f FileWriter) getLogDirectoryPath() string {
+	logFileDirectory := os.Getenv(constants.KEY_LOGDIRECTORYPATH)
+	if logFileDirectory == "" {
+		panic("logfiledirectory path is mandatory")
+	}
+
+	return logFileDirectory
 }

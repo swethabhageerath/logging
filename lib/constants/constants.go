@@ -18,24 +18,6 @@ func (l LogLevel) String() string {
 	}
 }
 
-type FrameDepth int
-
-const (
-	CURRENT FrameDepth = iota
-	ALL
-)
-
-func (f FrameDepth) String() string {
-	switch f {
-	case CURRENT:
-		return "Current"
-	case ALL:
-		return "All"
-	default:
-		return "Current"
-	}
-}
-
 type LoggerType int
 
 const (
@@ -104,3 +86,7 @@ func (l LoggerExcludesValues) String() string {
 		return ""
 	}
 }
+
+const (
+	KEY_LOGDIRECTORYPATH = "KEY_LOGDIRECTORYPATH"
+)
