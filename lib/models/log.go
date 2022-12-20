@@ -31,6 +31,14 @@ type Frame struct {
 	LineNumber int
 }
 
+func New(options ...Options) *log {
+	log := new(log)
+	for _, i := range options {
+		i(log)
+	}
+	return log
+}
+
 func (l *log) Attach(observer io.Writer) (bool, error) {
 	for _, o := range l.Observers {
 		if o == observer {
